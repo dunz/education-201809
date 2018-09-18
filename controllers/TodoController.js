@@ -11,10 +11,10 @@ export default class TodoController extends Observable {
     }
     
     initService() {
-        this.inputView.addTodoHandler = this.addTodoHandler.bind(this);
-        this.listFoldButtonView.toggleFoldHandler = this.toggleFoldHandler.bind(this);
-        this.listView.getFetchTodoList = this.getFetchTodoList.bind(this);
-        this.todoModel.subscribe(this.afterAddTodo.bind(this));
+        // this.inputView.addTodoHandler = this.addTodoHandler.bind(this);
+        // this.listFoldButtonView.toggleFoldHandler = this.toggleFoldHandler.bind(this);
+        // this.listView.getFetchTodoList = this.getFetchTodoList.bind(this);
+        // this.todoModel.subscribe(this.afterAddTodo.bind(this));
     };
     
     addTodoHandler(todoString) {

@@ -1,26 +1,35 @@
 export default class ListView {
-    constructor(listElement) {
+    constructor(todoModel, foldModel) {
+        this.todoModel = todoModel;
+        this.foldModel = foldModel;
         this.listElement = document.querySelector('.todolist');
         this._ = {
             displayClassName: 'visible'
         };
         this.todoList = null;
-        this.getFetchTodoList = function () {
-        };
         this.initEvent();
     }
     
-    toggleFold(isFold) {
-        isFold ?
-            this.listElement.classList.remove('hidden') :
-            this.listElement.classList.add('hidden');
-    }
-    
     initEvent() {
+        this.todoModel.subscribe(todos => {
+            this.renderTodo(todos[todos.length - 1])
+        });
+        this.foldModel.subscribe(this.toggleFold.bind(this));
+        
         document.addEventListener('DOMContentLoaded', async () => {
             this.todoList = await this.getFetchTodoList();
             this.render(this.todoList);
         });
+    }
+    
+    async getFetchTodoList() {
+        return this.todoModel.todos = await fetch('./mock.json').then(res => res.json());
+    }
+    
+    toggleFold(isFold) {
+        isFold ?
+            this.listElement.classList.add('hidden') :
+            this.listElement.classList.remove('hidden');
     }
     
     getTodoTemplate(todo){

@@ -1,16 +1,16 @@
 export default class ListFoldButtonView {
-    constructor() {
-        this.isFold = false;
+    constructor(todoModel, foldModel) {
+        this.todoModel = todoModel;
+        this.foldModel = foldModel;
         this.foldText = '';
         this.foldButton = document.querySelector('.fold');
-        this.toggleFoldHandler = function () {
-        };
         this.initEvents();
     }
     
     initEvents() {
+        this.foldModel.subscribe(this.setFoldText.bind(this));
         this.foldButton.addEventListener('click', (e) => {
-            this.toggleFoldHandler(this.isFold);
+            this.foldModel.toggleIsFold();
         });
     }
     
