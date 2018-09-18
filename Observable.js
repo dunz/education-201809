@@ -13,14 +13,21 @@ export default class Observable {
     }
 }
 
-
-//observable
-// const source$ = new Observable();
-//
-// //구독 (subscribe)
-// source$.subscribe((data)=> {
-//     console.log(`movie is ${data}`);
-// });
-//
-// //알림 (notify)
-// document.body.addEventListener("click", () => source$.notify("어벤져스 인피니티워"));
+class EventChannel {
+    constructor() {
+        this.eventMap = new Map();
+    }
+    
+    subscribe(eventType, fn) {
+        if(this.eventMap.has(eventType)) {
+            this.eventMap.get(eventType).add(fn);
+        } else {
+            this.eventMap.set(eventType, (new Set).add(fn));
+        }
+    }
+    
+    publish(eventType, data) {
+        const fnList = this.eventMap.get(eventType);
+        fnList && fnList.forEach(fn => fn(data));
+    }
+}
